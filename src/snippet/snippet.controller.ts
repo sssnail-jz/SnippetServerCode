@@ -1,28 +1,31 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
+import { SnippetService } from './snippet.service';
 
 @Controller('snippet')
 export class SnippetController {
+  constructor(private snippetService:SnippetService){}
+
   // 获取 snippet 列表
-  @Get('list')
+  @Get()
   snippetList(){
-    return "this is snippet list!"
+    return this.snippetService.snippetList()
   }
   
   // 新建 snippet
   @Post()
   snippetCreate(@Body() body){
-    return "create successful!"
+    return this.snippetService.snippetCreate(body)
   } 
   
   // 修改 snippet
   @Put(':id')
   snippetPut(@Param('id') id, @Body() body): string{
-    return "modify snippet successful!"
+    return this.snippetService.snippetPut(id,body)
   }
 
   // 删除 snippet
   @Delete(':id')
   snippetDelete(@Param('id') id: string): string{
-    return "delete Snippet successful!"
+    return this.snippetService.snippetDelete(id)
   }
 }
