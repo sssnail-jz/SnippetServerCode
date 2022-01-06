@@ -1,7 +1,7 @@
 import { Controller, Get, Response, Request} from '@nestjs/common';
 
 @Controller('snippettest')
-export class SnippettestController {
+export class TestCookieController {
   @Get('setcookie')
   setCookie(@Response() res){
     res.cookie("name",'zhangsan',{maxAge: 900000, httpOnly: true}); 
