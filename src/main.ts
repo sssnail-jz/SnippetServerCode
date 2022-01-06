@@ -7,13 +7,13 @@ import * as session from 'express-session';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
-  
-  // 配置模板引擎
-  app.setBaseViewsDir(join(__dirname, '..', 'views')) // 放视图的文件
-  app.setViewEngine('ejs');
 
   // 配置静态资源路径
   app.useStaticAssets('statics'); 
+
+  // 配置模板引擎
+  app.setBaseViewsDir(join(__dirname, '..', 'views')) // 放视图的文件
+  app.setViewEngine('ejs');
 
   // 配置 cookie
   app.use(cookieParser());
