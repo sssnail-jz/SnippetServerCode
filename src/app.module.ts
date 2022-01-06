@@ -10,9 +10,10 @@ import { TestfileuploadController } from './testfileupload/testfileupload.contro
 // 导入写好的中间件类
 import {InitMiddleware} from './middleware/InitMiddleware'
 import { UserController } from './user/user.controller';
+import { SnippetModule } from './snippet/snippet.module';
 
 @Module({
-  imports: [],
+  imports: [SnippetModule],
   controllers: [AppController, SnippetController, TestCookieController, TestsessionController, TestfileuploadController, UserController],
   providers: [AppService, SnippetService],
 })
