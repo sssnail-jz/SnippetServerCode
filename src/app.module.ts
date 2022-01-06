@@ -9,10 +9,11 @@ import { TestfileuploadController } from './testfileupload/testfileupload.contro
 
 // 导入写好的中间件类
 import {InitMiddleware} from './middleware/InitMiddleware'
+import { UserController } from './user/user.controller';
 
 @Module({
   imports: [],
-  controllers: [AppController, SnippetController, TestCookieController, TestsessionController, TestfileuploadController],
+  controllers: [AppController, SnippetController, TestCookieController, TestsessionController, TestfileuploadController, UserController],
   providers: [AppService, SnippetService],
 })
 export class AppModule implements NestModule{
