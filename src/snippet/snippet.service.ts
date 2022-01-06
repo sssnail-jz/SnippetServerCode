@@ -14,7 +14,7 @@ export class SnippetService {
   }
   snippetPut(id, body){
     // test custom mongoose exception
-    throw new MongooseException()
+    // throw new MongooseException()
     return "modify snippet successful!"
   }
   snippetDelete(id){

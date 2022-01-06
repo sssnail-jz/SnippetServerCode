@@ -8,10 +8,13 @@ import {
   Put, 
   Response, 
   Request,
-  UseFilters
+  UseFilters,
+  UseGuards
   } from '@nestjs/common';
 import { SnippetService } from './snippet.service';
 import {MongooseExceptionFilter} from '../testexceptionfilter/mongooseexception.filter'
+import {Roles} from '../decorator/roles.decorator'
+import {RolesGuard} from '../testguard/roles.gyard'
 
 @Controller('snippet')
 export class SnippetController {
@@ -27,6 +30,7 @@ export class SnippetController {
   
   // 新建 snippet
   @Post()
+  @UseGuards(RolesGuard)
   async snippetCreate(@Body() body, @Response() res){
     res.json({
       data: await this.snippetService.snippetCreate(body)
@@ -36,6 +40,8 @@ export class SnippetController {
   // 修改 snippet
   @Put(':id')
   @UseFilters(MongooseExceptionFilter)
+  @Roles('admin') // 测试守卫，这里手动赋予 admin 权限
+  @UseGuards(RolesGuard)
   snippetPut(@Param('id') id, @Body() body): string{
     return this.snippetService.snippetPut(id,body)
   }
