@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import {MongooseException} from '../testcustomexception/mongoose.exception'
 
 @Injectable()
 export class SnippetService {
@@ -12,6 +13,8 @@ export class SnippetService {
     return await this.snippetModule.create({title:'test title', author: 'jack'})
   }
   snippetPut(id, body){
+    // test custom mongoose exception
+    throw new MongooseException()
     return "modify snippet successful!"
   }
   snippetDelete(id){
