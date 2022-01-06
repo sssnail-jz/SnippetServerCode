@@ -1,5 +1,17 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Response, Request} from '@nestjs/common';
+import { 
+  Body, 
+  Controller, 
+  Delete, 
+  Get, 
+  Param, 
+  Post, 
+  Put, 
+  Response, 
+  Request,
+  UseFilters
+  } from '@nestjs/common';
 import { SnippetService } from './snippet.service';
+import {MongooseExceptionFilter} from '../testexceptionfilter/mongooseexception.filter'
 
 @Controller('snippet')
 export class SnippetController {
@@ -23,6 +35,7 @@ export class SnippetController {
   
   // 修改 snippet
   @Put(':id')
+  @UseFilters(MongooseExceptionFilter)
   snippetPut(@Param('id') id, @Body() body): string{
     return this.snippetService.snippetPut(id,body)
   }
