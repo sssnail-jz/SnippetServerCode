@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class SnippetService {
-  snippetList(){
-    return "this is snippet list!"
+  constructor(
+    @InjectModel('Snippet') private readonly snippetModule){}
+  async snippetList(){
+    return await this.snippetModule.find()
   }
-  snippetCreate(body){
-    return "create successful!"
+  async snippetCreate(body){
+    return await this.snippetModule.create({title:'test title', author: 'jack'})
   }
   snippetPut(id, body){
     return "modify snippet successful!"

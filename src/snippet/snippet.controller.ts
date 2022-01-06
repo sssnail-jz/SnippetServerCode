@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Response, Request } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put, Response, Request} from '@nestjs/common';
 import { SnippetService } from './snippet.service';
 
 @Controller('snippet')
@@ -7,18 +7,18 @@ export class SnippetController {
 
   // 获取 snippet 列表
   @Get()
-  snippetList(@Request() req, @Response() res){
-    
+  async snippetList(@Request() req, @Response() res){
     res.json({
-      cookietest: req.cookies.name,
-      data: this.snippetService.snippetList()
+      data: await this.snippetService.snippetList()
     })
   }
   
   // 新建 snippet
   @Post()
-  snippetCreate(@Body() body){
-    return this.snippetService.snippetCreate(body)
+  async snippetCreate(@Body() body, @Response() res){
+    res.json({
+      data: await this.snippetService.snippetCreate(body)
+    }) 
   } 
   
   // 修改 snippet
