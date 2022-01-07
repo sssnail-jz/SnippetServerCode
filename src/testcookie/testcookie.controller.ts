@@ -1,6 +1,8 @@
 import { Controller, Get, Response, Request} from '@nestjs/common';
+import {ApiTags} from '@nestjs/swagger';
 
-@Controller('snippettest')
+@Controller('testcookie')
+@ApiTags('snippettest')
 export class TestCookieController {
   @Get('setcookie')
   setCookie(@Response() res){

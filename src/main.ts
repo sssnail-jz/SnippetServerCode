@@ -6,6 +6,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session';
 import {SnippetLogger} from './testcustomlogger/snippetLogger'
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule,
@@ -14,7 +15,7 @@ async function bootstrap() {
     }
     );
 
-  // 配置 logger ，让 nest 使用 snippetlogger 
+  // 配置 logger（全局的 logger 为 snippetlogger） 
   app.useLogger(new SnippetLogger());
 
   // 配置静态资源路径
@@ -36,11 +37,22 @@ async function bootstrap() {
     saveUninitialized: true
   }));
   
-  // 配置验证机制
+  // 配置验证管道和转化
   app.useGlobalPipes(new ValidationPipe({
+    transform: true,
     whitelist: true, // 启用白名单
     forbidNonWhitelisted: true // 出现不在白名单中的属性会报错
   }));
+
+  // 配置 swagger
+  const options = new DocumentBuilder()
+  .setTitle('Snippet')
+  .setDescription('The Snippet API description')
+  .setVersion('1.0')
+  .build();
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
+
   await app.listen(3000);
 }
 bootstrap();

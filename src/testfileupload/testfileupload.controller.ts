@@ -3,7 +3,10 @@ import { FileInterceptor,FilesInterceptor } from '@nestjs/platform-express';
 import {join} from 'path';
 import {createWriteStream} from 'fs';
 
+import {ApiTags} from '@nestjs/swagger';
+
 @Controller('testfileupload')
+@ApiTags('snippettest')
 @UseInterceptors(FileInterceptor('pic'))
 export class TestfileuploadController {
   // 发送文件上传表单 html

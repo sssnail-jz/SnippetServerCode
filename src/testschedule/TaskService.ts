@@ -11,9 +11,9 @@ export class TaskService {
     this.logger.debug('run in app staret 10 seconds later.');
   }
 
-  @Interval(1000)
+  @Interval(5000)
   handleInterval() {
-    this.logger.debug('Called every 1 seconds');
+    this.logger.debug('Called every 5 seconds');
   }
 
   @Timeout(5000)
