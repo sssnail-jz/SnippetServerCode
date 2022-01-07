@@ -14,6 +14,8 @@ import { SnippetModule } from './snippet/snippet.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import DbConfiguration from './testconfig/db.configuration';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TaskModule } from './testschedule/TaskModule';
 
 @Module({
   imports: [
@@ -21,7 +23,9 @@ import DbConfiguration from './testconfig/db.configuration';
     ConfigModule.forRoot({
       load: [DbConfiguration],
     }),
-    SnippetModule
+    ScheduleModule.forRoot(),
+    SnippetModule,
+    TaskModule
   ],
   controllers: [AppController, TestCookieController, TestsessionController, TestfileuploadController, UserController],
   providers: [AppService],
