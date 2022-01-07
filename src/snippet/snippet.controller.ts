@@ -9,12 +9,12 @@ import {
   Response, 
   Request,
   UseFilters,
-  UseGuards
-  } from '@nestjs/common';
+  UseGuards} from '@nestjs/common';
 import { SnippetService } from './snippet.service';
 import {MongooseExceptionFilter} from '../testexceptionfilter/mongooseexception.filter'
 import {Roles} from '../decorator/roles.decorator'
 import {RolesGuard} from '../testguard/roles.gyard'
+import { OneIdParam } from './utils/OnIdParam';
 
 @Controller('snippet')
 export class SnippetController {
@@ -40,10 +40,10 @@ export class SnippetController {
   // 修改 snippet
   @Put(':id')
   @UseFilters(MongooseExceptionFilter)
-  @Roles('admin') // 测试守卫，这里手动赋予 admin 权限
-  @UseGuards(RolesGuard)
-  snippetPut(@Param('id') id, @Body() body): string{
-    return this.snippetService.snippetPut(id,body)
+  // @Roles('admin') // 测试守卫，这里手动添加 admin 权限
+  // @UseGuards(RolesGuard)
+  snippetPut(@Param() param: OneIdParam, @Body() body): string{
+    return this.snippetService.snippetPut(param.id, body)
   }
 
   // 删除 snippet
