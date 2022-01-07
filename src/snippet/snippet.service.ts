@@ -1,12 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {MongooseException} from '../testcustomexception/mongoose.exception'
+import {SnippetLogger} from '../testcustomlogger/snippetLogger'
 
 @Injectable()
 export class SnippetService {
-  constructor(
-    @InjectModel('Snippet') private readonly snippetModule){}
+  private snippetLogger = new SnippetLogger(SnippetService.name)
+
+  constructor(@InjectModel('Snippet') private readonly snippetModule){}
+
   async snippetList(){
+    this.snippetLogger.log('Doing something...');
+    this.snippetLogger.error('test error')
     return await this.snippetModule.find()
   }
   async snippetCreate(body){

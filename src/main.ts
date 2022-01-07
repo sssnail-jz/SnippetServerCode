@@ -5,9 +5,17 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cookieParser from 'cookie-parser'
 import * as session from 'express-session';
+import {SnippetLogger} from './testcustomlogger/snippetLogger'
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule,
+    {
+      bufferLogs: true
+    }
+    );
+
+  // 配置 logger ，让 nest 使用 snippetlogger 
+  app.useLogger(new SnippetLogger());
 
   // 配置静态资源路径
   app.useStaticAssets('statics'); 
