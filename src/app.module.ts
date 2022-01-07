@@ -12,10 +12,15 @@ import {InitMiddleware} from './middleware/InitMiddleware'
 import { UserController } from './user/user.controller';
 import { SnippetModule } from './snippet/snippet.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
+import DbConfiguration from './testconfig/db.configuration';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/snippet',{ useNewUrlParser: true }),
+    ConfigModule.forRoot({
+      load: [DbConfiguration],
+    }),
     SnippetModule
   ],
   controllers: [AppController, TestCookieController, TestsessionController, TestfileuploadController, UserController],
