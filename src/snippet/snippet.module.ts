@@ -1,14 +1,16 @@
 import { Module } from '@nestjs/common';
 import {SnippetController} from './snippet.controller'
 import {SnippetService} from './snippet.service'
-import { SnippetSchema } from './schemas/article.schema';
+import { SnippetSchema } from './schemas/snippet.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { UsersModule } from 'src/users/users.module';
 
 @Module({
   imports:[
     MongooseModule.forFeature([{ name: 'Snippet', schema: SnippetSchema,collection:"snippets" }]),
-    ConfigModule
+    ConfigModule,
+    UsersModule
   ],
   controllers: [SnippetController],
   providers: [SnippetService],
