@@ -31,7 +31,7 @@ export class UsersService {
   }
 
   async findOne(username: string): Promise<User | undefined> {
-    return this.users.find(user => user.username === username);
+    return this.users.find((user) => user.username === username);
   }
 
   // 测试，程序启动创建测试的用户信息到 mongoose
@@ -44,7 +44,7 @@ export class UsersService {
   //   await this.userModule.create({name:'jac3k', email: '1051975986@qq.com', password: '123'})
   // }
 
-  async testFindOneUser(){
-    return await this.userModule.findOne({name: 'jack2'})
+  async testFindOneUser() {
+    return await this.userModule.findOne({ name: 'jack2' });
   }
 }

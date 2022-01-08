@@ -14,25 +14,24 @@ export class CreateSnippetBody {
     maxLength: 30,
     default: 'test title',
   })
-  title: string
+  title: string;
 
   // 作者
   @IsString()
   @ApiProperty()
-  author: string
+  author: string;
 
   // 发布日期（时间戳）
   @IsNumber()
   @ApiProperty()
-  publishDate: number
+  publishDate: number;
 
   // 内容
   @IsString()
   @ApiProperty()
-  content: string
+  content: string;
 
   // 封面
   // @IsBase64()
   // cover: BinaryType
-
 }

@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import {RolesForbiddenException} from '../testcustomexception/rolesborbidden.exception'
+import { RolesForbiddenException } from '../testcustomexception/rolesborbidden.exception';
 // 这个守卫用来守卫 roles
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -17,12 +17,12 @@ export class RolesGuard implements CanActivate {
       消息中间件判断 token，如果具备管理员权限，设置 request.user = admin，
       然后 snippet 里面的 put 方法需要（至少） admin 权限
     */
-    console.log(request.query.role)
-    console.log(roles)
-    if(request.query.role === roles[0] ){
-      return true
-    }else{
-      throw new RolesForbiddenException()
+    console.log(request.query.role);
+    console.log(roles);
+    if (request.query.role === roles[0]) {
+      return true;
+    } else {
+      throw new RolesForbiddenException();
     }
   }
 }
