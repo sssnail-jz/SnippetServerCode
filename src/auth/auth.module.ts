@@ -10,7 +10,7 @@ import { jwtConstants } from './constants';
 @Module({
   imports: [
     UsersModule, 
-    PassportModule,
+    PassportModule.register({ defaultStrategy: 'jwt' }), // 配置默认 passport 策略
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' },
