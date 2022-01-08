@@ -9,25 +9,31 @@ import { TestfileuploadController } from './testfileupload/testfileupload.contro
 
 // 导入写好的中间件类
 import {InitMiddleware} from './middleware/InitMiddleware'
-import { UserController } from './user/user.controller';
 import { SnippetModule } from './snippet/snippet.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import DbConfiguration from './testconfig/db.configuration';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TaskModule } from './testschedule/TaskModule';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/snippet',{ useNewUrlParser: true }),
-    ConfigModule.forRoot({
-      load: [DbConfiguration],
-    }),
+    ConfigModule.forRoot({ load: [DbConfiguration]}),
     ScheduleModule.forRoot(),
     SnippetModule,
-    TaskModule
+    TaskModule,
+    AuthModule,
+    UsersModule
   ],
-  controllers: [AppController, TestCookieController, TestsessionController, TestfileuploadController, UserController],
+  controllers: [
+    AppController, 
+    TestCookieController, 
+    TestsessionController, 
+    TestfileuploadController
+  ],
   providers: [AppService],
 })
 export class AppModule implements NestModule{
