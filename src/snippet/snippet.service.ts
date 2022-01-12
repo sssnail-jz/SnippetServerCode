@@ -4,6 +4,7 @@ import { MongooseException } from '../testcustomexception/mongoose.exception';
 import { SnippetLogger } from '../testcustomlogger/snippetLogger';
 import { Timeout } from '@nestjs/schedule';
 import { UsersService } from 'src/users/users.service';
+import * as mongoose from 'mongoose';
 
 @Injectable()
 export class SnippetService {
@@ -14,16 +15,19 @@ export class SnippetService {
     private readonly usersService: UsersService,
   ) {}
 
+  // 获取snippet列表
   async snippetList() {
-    this.snippetLogger.log('Doing something...');
-    this.snippetLogger.error('test error');
-    return await this.snippetModule.find();
+    const result = await this.snippetModule.find();
+    this.snippetLogger.debug(result)
+    return result
   }
+
+  // 创建 snippet
   async snippetCreate(body) {
-    return await this.snippetModule.create({
-      title: 'test title',
-      author: 'jack',
-    });
+    body.publishDate = Date.now()
+    body.author = new  mongoose.Types.ObjectId()
+    this.snippetLogger.debug(body)
+    return await this.snippetModule.create(body);
   }
   snippetPut(id, body) {
     // test custom mongoose exception

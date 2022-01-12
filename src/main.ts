@@ -55,6 +55,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('api', app, document);
 
+  // 跨域问题
+  app.enableCors();
+  
   await app.listen(3000);
 }
 bootstrap();

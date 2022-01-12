@@ -44,6 +44,10 @@ export class SnippetController {
     description: '创建 snippet 成功',
     type: CreateSnippetBody /*测试*/,
   })
+  @ApiResponse({
+    status: 500,
+    description: '服务内部创建数据异常',
+  })
   async snippetCreate(
     @Body() body: CreateSnippetBody,
   ): Promise<{ title: string; author: string }> {

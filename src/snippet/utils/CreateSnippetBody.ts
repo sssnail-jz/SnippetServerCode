@@ -1,9 +1,13 @@
-import { IsString, IsNumber, IsBase64 } from 'class-validator';
+import { IsString, IsNumber, IsBase64, IsArray } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 /**
  * CreateSnippetBody 会被 new snippet、update snippet 接口共用，
  * 后者会利用 nestjs 的类型映射选择 CreateSnippetBody 的某些成员组成新类型
+ */
+/**
+ * 用户：客户端传递 token ，服务端通过 token 查到此用户的 objectId，然后动态赋值
+ * 到 author 字段
  */
 export class CreateSnippetBody {
   // 标题
@@ -12,26 +16,28 @@ export class CreateSnippetBody {
     description: 'The title of new snippet',
     minLength: 1,
     maxLength: 30,
-    default: 'test title',
+    default: 'default title',
   })
   title: string;
 
-  // 作者
-  @IsString()
-  @ApiProperty()
-  author: string;
-
-  // 发布日期（时间戳）
-  @IsNumber()
-  @ApiProperty()
-  publishDate: number;
-
   // 内容
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'snippet 内容',
+    minLength: 1,
+    default: 'default content'
+  })
   content: string;
 
-  // 封面
-  // @IsBase64()
-  // cover: BinaryType
+  // 封面(目前先是 string)
+  @IsString()
+  @ApiProperty()
+  cover: string
+
+  // 标签
+  @IsArray()
+  @ApiProperty({
+    default:['default tags1', 'default tags2']
+  })
+  tags:[]
 }
