@@ -41,7 +41,7 @@ import { UsersModule } from './users/users.module';
     TestsessionController,
     TestfileuploadController,
   ],
-  providers: [AppService],
+  providers: [AppService]
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

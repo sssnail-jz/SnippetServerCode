@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { MongooseException } from '../testcustomexception/mongoose.exception';
+import { MongooseException } from '../customexception/mongoose.exception';
 import { SnippetLogger } from '../testcustomlogger/snippetLogger';
 import { Timeout } from '@nestjs/schedule';
 import { UsersService } from 'src/users/users.service';
@@ -25,7 +25,7 @@ export class SnippetService {
   // 创建 snippet
   async snippetCreate(body) {
     body.publishDate = Date.now()
-    body.author = new  mongoose.Types.ObjectId()
+    // body.author = new  mongoose.Types.ObjectId()
     this.snippetLogger.debug(body)
     return await this.snippetModule.create(body);
   }

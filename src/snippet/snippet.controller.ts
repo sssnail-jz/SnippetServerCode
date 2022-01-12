@@ -9,10 +9,11 @@ import {
   Response,
   Request,
   UseFilters,
-  UseGuards,
+  UseGuards
 } from '@nestjs/common';
 import { SnippetService } from './snippet.service';
-import { MongooseExceptionFilter } from '../testexceptionfilter/mongooseexception.filter';
+import { SnippetExceptionsFilter } from '../exceptionfilter/snippet.exception.filter';
+import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
 import { Roles } from '../decorator/roles.decorator';
 import { RolesGuard } from '../testguard/roles.gyard';
 import { OneIdParam } from './utils/OnIdParam';
@@ -38,15 +39,17 @@ export class SnippetController {
 
   // 新建 snippet
   @Post()
-  @UseGuards(RolesGuard)
+  @UseFilters(SnippetExceptionsFilter)
+  @UseGuards(RolesGuard) 
   @ApiResponse({
     status: 201,
     description: '创建 snippet 成功',
-    type: CreateSnippetBody /*测试*/,
+    type: SnippetExceptionSchema
   })
   @ApiResponse({
     status: 500,
     description: '服务内部创建数据异常',
+    type: SnippetExceptionSchema
   })
   async snippetCreate(
     @Body() body: CreateSnippetBody,
@@ -56,7 +59,6 @@ export class SnippetController {
 
   // 修改 snippet
   @Put(':id')
-  @UseFilters(MongooseExceptionFilter)
   @ApiResponse({ status: 200, description: '修改 snippet 成功.' })
   @ApiResponse({ status: 520, description: 'mongoose exception.' })
   // @Roles('admin') // 测试守卫，这里手动添加 admin 权限
