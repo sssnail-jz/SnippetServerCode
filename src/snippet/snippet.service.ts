@@ -22,8 +22,8 @@ export class SnippetService {
   }
 
   // 获取 snippet 详情
-  async snippetDetail(id : string){
-    this.snippetLogger.debug('Id checkout: ' + id)
+  async snippetDetail(id){
+    this.snippetLogger.debug('[snippetDetail] Id checkout: ' + id)
     const result = await this.snippetModule.findOne({_id: id})
     return result
   }

@@ -16,8 +16,8 @@ import { SnippetExceptionsFilter } from '../exceptionfilter/snippet.exception.fi
 import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
 import { Roles } from '../decorator/roles.decorator';
 import { RolesGuard } from '../testguard/roles.gyard';
-import { OneIdParam } from './utils/OnIdParam';
-import { CreateSnippetBody } from './utils/CreateSnippetBody';
+import { OneIdParam } from '../utils/OnIdParam';
+import { CreateSnippetBody } from '../utils/CreateSnippetBody';
 import { ApiTags, ApiHeader, ApiResponse } from '@nestjs/swagger';
 
 @Controller('snippet')
