@@ -22,6 +22,7 @@ import { ApiTags, ApiHeader, ApiResponse } from '@nestjs/swagger';
 
 @Controller('snippet')
 @ApiTags('snippet')
+@UseFilters(SnippetExceptionsFilter)
 // @ApiHeader({
 //   name: 'Authorization',
 //   description: 'Auth token'
@@ -49,7 +50,6 @@ export class SnippetController {
 
   // 新建 snippet
   @Post()
-  @UseFilters(SnippetExceptionsFilter)
   @UseGuards(RolesGuard) 
   @ApiResponse({
     status: 201,

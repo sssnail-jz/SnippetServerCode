@@ -1,11 +1,13 @@
-import { Body, Controller, Get, Param, Post, Response } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Response, UseFilters } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { OneIdParam } from '../utils/OnIdParam';
 import { ApiTags } from '@nestjs/swagger';
 import { CreateCommentBody } from 'src/utils/CreateCommentBody';
+import { SnippetExceptionsFilter } from 'src/exceptionfilter/snippet.exception.filter';
 
 @Controller('comment')
 @ApiTags('comment')
+@UseFilters(SnippetExceptionsFilter)
 export class CommentController {
 
   constructor(private readonly commentService: CommentService){}

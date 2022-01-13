@@ -11,15 +11,19 @@ export class CommentService {
 
   async getCommentsById(id){
     this.snippetLogger.debug('[getCommentsById] Id checkout: ' + id)
-    return await this.commentModule.find({_id: id})
+    // 从数据库中查找到此文章对应的所有评论
+    const result = await this.commentModule.find({snippet: id}).populate('author')
+    return result
   }
 
   async createCommentForId(id, body){
     this.snippetLogger.debug('[createCommentForId] Id checkout: ' + id)
     this.snippetLogger.debug('[createCommentForId] Body checkout: ' + JSON.stringify(body))
     var createBody = body
+    // 将评论关联到文章
     createBody.snippet = new  mongoose.Types.ObjectId(id)
-    createBody.author = new  mongoose.Types.ObjectId()
+    // 将评论关联到用户
+    createBody.author = new  mongoose.Types.ObjectId('61d94e20a502c2591edc53e9')
     createBody.createdDate = Date.now()
     return await this.commentModule.create(createBody)
   }
