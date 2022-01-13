@@ -31,9 +31,19 @@ export class SnippetController {
 
   // 获取 snippet 列表
   @Get()
-  async snippetList(@Request() req, @Response() res) {
+  async snippetList(@Response() res) {
     res.json({
+      // data 是数组
       data: await this.snippetService.snippetList(),
+    });
+  }
+
+  // 获取 snippet 详情
+  @Get(':id')
+  async snippetDetail(@Param() param: OneIdParam, @Response() res){
+    res.json({
+      // data 是对象
+      data: await this.snippetService.snippetDetail(param.id),
     });
   }
 

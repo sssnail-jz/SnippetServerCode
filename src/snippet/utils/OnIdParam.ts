@@ -1,6 +1,7 @@
-import { IsNumberString } from 'class-validator';
+import { IsString } from 'class-validator';
 
 export class OneIdParam {
-  @IsNumberString()
-  id: number;
+  // snippet 的 mongoose id
+  @IsString()
+  id: string;
 }
