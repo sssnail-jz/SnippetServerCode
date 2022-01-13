@@ -16,7 +16,7 @@ import { SnippetExceptionsFilter } from '../exceptionfilter/snippet.exception.fi
 import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
 import { Roles } from '../decorator/roles.decorator';
 import { RolesGuard } from '../testguard/roles.gyard';
-import { OneIdParam } from '../utils/OnIdParam';
+import { MongooseIdParam } from '../utils/MongooseIdParam';
 import { CreateSnippetBody } from '../utils/CreateSnippetBody';
 import { ApiTags, ApiHeader, ApiResponse } from '@nestjs/swagger';
 
@@ -41,7 +41,7 @@ export class SnippetController {
 
   // 获取 snippet 详情
   @Get(':id')
-  async snippetDetail(@Param() param: OneIdParam, @Response() res){
+  async snippetDetail(@Param() param: MongooseIdParam, @Response() res){
     res.json({
       // data 是对象
       data: await this.snippetService.snippetDetail(param.id),
@@ -73,7 +73,7 @@ export class SnippetController {
   @ApiResponse({ status: 520, description: 'mongoose exception.' })
   // @Roles('admin') // 测试守卫，这里手动添加 admin 权限
   // @UseGuards(RolesGuard)
-  snippetPut(@Param() param: OneIdParam, @Body() body): string {
+  snippetPut(@Param() param: MongooseIdParam, @Body() body): string {
     return this.snippetService.snippetPut(param.id, body);
   }
 
