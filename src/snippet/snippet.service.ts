@@ -32,6 +32,7 @@ export class SnippetService {
   async snippetCreate(body) {
     body.publishDate = Date.now()
     body.author = new  mongoose.Types.ObjectId()
+    this.snippetLogger.debug('[snippetCreate] body checkout: ' + body)
     return await this.snippetModule.create(body);
   }
 

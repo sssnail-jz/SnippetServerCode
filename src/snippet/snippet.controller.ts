@@ -15,10 +15,11 @@ import { SnippetService } from './snippet.service';
 import { SnippetExceptionsFilter } from '../exceptionfilter/snippet.exception.filter';
 import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
 import { Roles } from '../decorator/roles.decorator';
-import { RolesGuard } from '../testguard/roles.gyard';
+import { RolesGuard } from '../guard/roles.guard';
 import { MongooseIdParam } from '../utils/MongooseIdParam';
 import { CreateSnippetBody } from '../utils/CreateSnippetBody';
 import { ApiTags, ApiHeader, ApiResponse } from '@nestjs/swagger';
+import { Role } from 'src/role/role.enum';
 
 @Controller('snippet')
 @ApiTags('snippet')
@@ -50,6 +51,7 @@ export class SnippetController {
 
   // 新建 snippet
   @Post()
+  @Roles(Role.Admin)
   @UseGuards(RolesGuard) 
   @ApiResponse({
     status: 201,
@@ -61,9 +63,12 @@ export class SnippetController {
     description: '服务内部创建数据异常',
     type: SnippetExceptionSchema
   })
-  async snippetCreate(
-    @Body() body: CreateSnippetBody,
-  ): Promise<{ title: string; author: string }> {
+  @ApiResponse({
+    status: 521,
+    description: '权限错误',
+    type: SnippetExceptionSchema
+  })
+  async snippetCreate(@Body() body: CreateSnippetBody){
     return await this.snippetService.snippetCreate(body);
   }
 

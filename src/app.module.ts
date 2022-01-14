@@ -12,7 +12,6 @@ import { TestCookieController } from './testcookie/testcookie.controller';
 import { TestsessionController } from './testsession/testsession.controller';
 import { TestfileuploadController } from './testfileupload/testfileupload.controller';
 
-// 导入写好的中间件类
 import { InitMiddleware } from './middleware/InitMiddleware';
 import { SnippetModule } from './snippet/snippet.module';
 import { MongooseModule } from '@nestjs/mongoose';
