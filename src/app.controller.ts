@@ -1,11 +1,17 @@
-import { Controller, Get, UseGuards, Post, Request } from '@nestjs/common';
+import { Controller, Get, UseGuards, Post, Request, UseFilters } from '@nestjs/common';
 import { AppService } from './app.service';
-import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { AuthGuard } from '@nestjs/passport';
+import { SnippetExceptionsFilter } from './exceptionfilter/snippet.exception.filter';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { SnippetExceptionSchema } from './exceptionfilter/snippet.exception.schema';
+import { SnippetLogger } from './testcustomlogger/snippetLogger';
 
 @Controller()
+@ApiTags('door')
+@UseFilters(SnippetExceptionsFilter)
 export class AppController {
+  private readonly snippetLogger = new SnippetLogger(AppController.name);
   constructor(
     private readonly appService: AppService,
     private readonly authService: AuthService,
@@ -16,9 +22,15 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(AuthGuard('local'))
+  @ApiResponse({
+    status: 401,
+    description: '认证失败',
+    type: SnippetExceptionSchema
+  })
   @Post('auth/login')
   async login(@Request() req) {
+    this.snippetLogger.debug('[login] resuest.user ' + req.user)
     return this.authService.login(req.user);
   }
 

@@ -6,6 +6,7 @@ export const UserSchema = new mongoose.Schema({
     minlength: 1,
     maxlength: 15,
     required: true,
+    unique: true
   },
 
   // 邮箱
