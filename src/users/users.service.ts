@@ -10,6 +10,11 @@ export class UsersService {
   private readonly snippetLogger = new SnippetLogger(UsersService.name);
   constructor(@InjectModel('User') private readonly userModule) {}
 
+  async findUsers(){
+    const result = await this.userModule.find()
+    return result
+  }
+
   async findOneByName(username) {
     const result = await this.userModule.findOne({name: username})
     return result
