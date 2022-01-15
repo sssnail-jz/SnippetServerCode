@@ -10,7 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TestCookieController } from './testcookie/testcookie.controller';
 import { TestsessionController } from './testsession/testsession.controller';
-import { TestfileuploadController } from './testfileupload/testfileupload.controller';
+import { UploadController } from './upload/upload.controller';
 
 import { InitMiddleware } from './middleware/InitMiddleware';
 import { SnippetModule } from './snippet/snippet.module';
@@ -42,7 +42,7 @@ import { ReplyModule } from './reply/reply.module';
     AppController,
     TestCookieController,
     TestsessionController,
-    TestfileuploadController,
+    UploadController,
   ],
   providers: [AppService]
 })
