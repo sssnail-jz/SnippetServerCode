@@ -13,6 +13,7 @@ import { createWriteStream } from 'fs';
 import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
+import { UploadBody } from 'src/utils/UploadBody';
 
 @Controller('upload')
 @ApiTags('upload')
@@ -36,10 +37,13 @@ import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.sc
 export class UploadController {
 
   @Post()
-  upload(@UploadedFile() file: Express.Multer.File, @Body() body:{uname: string}) {
+  upload(
+    @UploadedFile() file: Express.Multer.File, 
+    @Body() body: UploadBody
+    ) {
     console.log(file);
     const writeImage = createWriteStream(
-      join(__dirname, '..', '../statics/upload', `${body.uname}`),
+      join(__dirname, '..', '../statics/upload', body.dir, body.uname),
     );
     writeImage.write(file.buffer);
     return 'success'

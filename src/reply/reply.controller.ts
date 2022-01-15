@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Response, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request, Response, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/decorator/roles.decorator';
@@ -63,8 +63,9 @@ export class ReplyController {
     type: SnippetExceptionSchema
   })
   async createReply(
+    @Request() req,
     @Param() param: MongooseIdParam, 
     @Body() body: CreateReplyBody){
-      return await this.replyService.createReply(param.id, body)
+      return await this.replyService.createReply(req, param.id, body)
   }
 }

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post, Response, UseFilters, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Request, Response, UseFilters, UseGuards } from '@nestjs/common';
 import { CommentService } from './comment.service';
 import { MongooseIdParam } from '../utils/MongooseIdParam';
 import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
@@ -64,8 +64,9 @@ export class CommentController {
     type: SnippetExceptionSchema
   })
   async createComment(
+    @Request() req,
     @Param() param: MongooseIdParam, 
     @Body() body: CreateCommentBody){
-      return await this.commentService.createComment(param.id, body)
+      return await this.commentService.createComment(req, param.id, body)
   }
 }

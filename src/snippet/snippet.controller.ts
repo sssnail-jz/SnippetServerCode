@@ -74,8 +74,8 @@ export class SnippetController {
     description: '权限错误',
     type: SnippetExceptionSchema
   })
-  async snippetCreate(@Body() body: CreateSnippetBody){
-    return await this.snippetService.snippetCreate(body);
+  async snippetCreate(@Body() body: CreateSnippetBody, @Request() req){
+    return await this.snippetService.snippetCreate(req, body);
   }
 
   // 修改 snippet

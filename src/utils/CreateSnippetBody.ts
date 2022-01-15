@@ -31,7 +31,9 @@ export class CreateSnippetBody {
 
   // 封面(目前先是 string)
   @IsString()
-  @ApiProperty()
+  @ApiProperty({
+    description: 'cover 路径， uid+filename'
+  })
   cover: string
 
   // 标签

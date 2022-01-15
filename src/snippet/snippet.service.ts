@@ -17,22 +17,20 @@ export class SnippetService {
 
   // 获取snippet列表
   async snippetList() {
-    const result = await this.snippetModule.find();
+    const result = await this.snippetModule.find().populate('author');
     return result
   }
 
   // 获取 snippet 详情
   async snippetDetail(id){
-    this.snippetLogger.debug('[snippetDetail] Id checkout: ' + id)
     const result = await this.snippetModule.findOne({_id: id})
     return result
   }
 
   // 创建 snippet
-  async snippetCreate(body) {
+  async snippetCreate(req, body) {
     body.publishDate = Date.now()
-    body.author = new  mongoose.Types.ObjectId()
-    this.snippetLogger.debug('[snippetCreate] body checkout: ' + body)
+    body.author = req.user._id
     return await this.snippetModule.create(body);
   }
 
