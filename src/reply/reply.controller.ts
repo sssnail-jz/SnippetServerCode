@@ -1,11 +1,33 @@
-import { Body, Controller, Get, Param, Post, Response } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Param, Post, Response, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/decorator/roles.decorator';
+import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
+import { RolesGuard } from 'src/guard/roles.guard';
+import { Role } from 'src/role/role.enum';
 import { CreateReplyBody } from 'src/utils/CreateReplyBody';
 import { MongooseIdParam } from 'src/utils/MongooseIdParam';
 import { ReplyService } from './reply.service';
 
 @Controller('reply')
 @ApiTags('reply')
+
+//// 认证
+@UseGuards(AuthGuard('jwt')) 
+@ApiResponse({
+  status: 401,
+  description: '认证失败',
+  type: SnippetExceptionSchema
+})
+@ApiResponse({
+  status: 500,
+  description: '服务内部创建数据异常',
+  type: SnippetExceptionSchema
+})
+@ApiHeader({
+  name: 'Authorization',
+  description: '认证token'
+})
 export class ReplyController {
   
   constructor(private readonly replyService: ReplyService){}
@@ -31,6 +53,15 @@ export class ReplyController {
    * @returns 
    */
   @Post(':id')
+
+  //// 权限
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)  
+  @ApiResponse({
+    status: 521,
+    description: '权限错误',
+    type: SnippetExceptionSchema
+  })
   async createReply(
     @Param() param: MongooseIdParam, 
     @Body() body: CreateReplyBody){

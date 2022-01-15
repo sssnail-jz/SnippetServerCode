@@ -36,6 +36,11 @@ export class AppController {
 
   @UseGuards(AuthGuard('jwt'))
   @Get('profile')
+  @ApiResponse({
+    status: 401,
+    description: '认证失败',
+    type: SnippetExceptionSchema
+  })
   getProfile(@Request() req) {
     return req.user;
   }

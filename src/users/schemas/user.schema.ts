@@ -21,4 +21,11 @@ export const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  // 权限
+  roles:{
+    type: [],
+    required: true,
+    default: ['admin']
+  }
 });

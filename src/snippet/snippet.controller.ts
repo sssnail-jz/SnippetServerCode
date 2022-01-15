@@ -20,14 +20,28 @@ import { MongooseIdParam } from '../utils/MongooseIdParam';
 import { CreateSnippetBody } from '../utils/CreateSnippetBody';
 import { ApiTags, ApiHeader, ApiResponse } from '@nestjs/swagger';
 import { Role } from 'src/role/role.enum';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('snippet')
 @ApiTags('snippet')
 @UseFilters(SnippetExceptionsFilter)
-// @ApiHeader({
-//   name: 'Authorization',
-//   description: 'Auth token'
-// })
+
+//// 认证
+@UseGuards(AuthGuard('jwt')) 
+@ApiResponse({
+  status: 401,
+  description: '认证失败',
+  type: SnippetExceptionSchema
+})
+@ApiResponse({
+  status: 500,
+  description: '服务内部创建数据异常',
+  type: SnippetExceptionSchema
+})
+@ApiHeader({
+  name: 'Authorization',
+  description: '认证token'
+})
 export class SnippetController {
   constructor(private snippetService: SnippetService) {}
 
@@ -51,18 +65,10 @@ export class SnippetController {
 
   // 新建 snippet
   @Post()
+
+  //// 权限
   @Roles(Role.Admin)
-  @UseGuards(RolesGuard) 
-  @ApiResponse({
-    status: 201,
-    description: '创建 snippet 成功',
-    type: SnippetExceptionSchema
-  })
-  @ApiResponse({
-    status: 500,
-    description: '服务内部创建数据异常',
-    type: SnippetExceptionSchema
-  })
+  @UseGuards(RolesGuard)  
   @ApiResponse({
     status: 521,
     description: '权限错误',
@@ -74,16 +80,30 @@ export class SnippetController {
 
   // 修改 snippet
   @Put(':id')
-  @ApiResponse({ status: 200, description: '修改 snippet 成功.' })
-  @ApiResponse({ status: 520, description: 'mongoose exception.' })
-  // @Roles('admin') // 测试守卫，这里手动添加 admin 权限
-  // @UseGuards(RolesGuard)
+
+  //// 权限
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)  
+  @ApiResponse({
+    status: 521,
+    description: '权限错误',
+    type: SnippetExceptionSchema
+  })
   snippetPut(@Param() param: MongooseIdParam, @Body() body): string {
     return this.snippetService.snippetPut(param.id, body);
   }
 
   // 删除 snippet
   @Delete(':id')
+
+  //// 权限
+  @Roles(Role.Admin)
+  @UseGuards(RolesGuard)  
+  @ApiResponse({
+    status: 521,
+    description: '权限错误',
+    type: SnippetExceptionSchema
+  })
   snippetDelete(@Param('id') id: string): string {
     return this.snippetService.snippetDelete(id);
   }
