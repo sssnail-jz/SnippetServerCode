@@ -18,7 +18,7 @@ export class ReplyService {
     // 将回复关联到评论
     createBody.comment = new  mongoose.Types.ObjectId(id)
     // 将回复关联到用户
-    createBody.author = req
+    createBody.author = req.user._id
     createBody.createdDate = Date.now()
     return await this.replyModule.create(createBody)
   }

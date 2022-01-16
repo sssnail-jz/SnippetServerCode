@@ -35,7 +35,7 @@ export class CommentService {
     // 将评论关联到文章
     createBody.snippet = new  mongoose.Types.ObjectId(id)
     // 将评论关联到用户
-    createBody.author = req.user_id
+    createBody.author = req.user._id
     createBody.createdDate = Date.now()
     createBody.replys = []
     return await this.commentModule.create(createBody)
