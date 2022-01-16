@@ -23,7 +23,7 @@ export class SnippetService {
 
   // 获取 snippet 详情
   async snippetDetail(id){
-    const result = await this.snippetModule.findOne({_id: id})
+    const result = await this.snippetModule.findOne({_id: id}).populate('author')
     return result
   }
 

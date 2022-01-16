@@ -16,8 +16,8 @@ import { SnippetExceptionsFilter } from '../exceptionfilter/snippet.exception.fi
 import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
 import { Roles } from '../decorator/roles.decorator';
 import { RolesGuard } from '../guard/roles.guard';
-import { MongooseIdParam } from '../utils/MongooseIdParam';
-import { CreateSnippetBody } from '../utils/CreateSnippetBody';
+import { MongooseIdParam } from '../entities/mondoose.id.param';
+import { CreateSnippetBody } from '../entities/create.snippet.body';
 import { ApiTags, ApiHeader, ApiResponse } from '@nestjs/swagger';
 import { Role } from 'src/role/role.enum';
 import { AuthGuard } from '@nestjs/passport';

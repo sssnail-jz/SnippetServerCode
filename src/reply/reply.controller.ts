@@ -5,8 +5,8 @@ import { Roles } from 'src/decorator/roles.decorator';
 import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
 import { RolesGuard } from 'src/guard/roles.guard';
 import { Role } from 'src/role/role.enum';
-import { CreateReplyBody } from 'src/utils/CreateReplyBody';
-import { MongooseIdParam } from 'src/utils/MongooseIdParam';
+import { CreateReplyBody } from 'src/entities/create.reply.body';
+import { MongooseIdParam } from 'src/entities/mondoose.id.param';
 import { ReplyService } from './reply.service';
 
 @Controller('reply')

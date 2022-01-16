@@ -23,6 +23,8 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CommentModule } from './comment/comment.module';
 import { ReplyModule } from './reply/reply.module';
+import { TagsController } from './tags/tags.controller';
+import { TagsModule } from './tags/tags.module';
 
 @Module({
   imports: [
@@ -36,13 +38,14 @@ import { ReplyModule } from './reply/reply.module';
     AuthModule,
     UsersModule,
     CommentModule,
-    ReplyModule
+    ReplyModule,
+    TagsModule
   ],
   controllers: [
     AppController,
     TestCookieController,
     TestsessionController,
-    UploadController,
+    UploadController
   ],
   providers: [AppService]
 })

@@ -1,8 +1,8 @@
 import { Body, Controller, Get, Param, Post, Request, Response, UseFilters, UseGuards } from '@nestjs/common';
 import { CommentService } from './comment.service';
-import { MongooseIdParam } from '../utils/MongooseIdParam';
+import { MongooseIdParam } from '../entities/mondoose.id.param';
 import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { CreateCommentBody } from 'src/utils/CreateCommentBody';
+import { CreateCommentBody } from 'src/entities/create.comment.body';
 import { SnippetExceptionsFilter } from 'src/exceptionfilter/snippet.exception.filter';
 import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
 import { AuthGuard } from '@nestjs/passport';
