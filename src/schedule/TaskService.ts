@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Cron, Interval, Timeout } from '@nestjs/schedule';
-import { SnippetLogger } from 'src/testcustomlogger/snippetLogger';
+import { SnippetLogger } from 'src/customlogger/SnippetLogger';
 
 @Injectable()
 export class TaskService {

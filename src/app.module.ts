@@ -8,30 +8,29 @@ import {
 } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TestCookieController } from './testcookie/testcookie.controller';
-import { TestsessionController } from './testsession/testsession.controller';
 import { UploadController } from './upload/upload.controller';
 
 import { InitMiddleware } from './middleware/InitMiddleware';
 import { SnippetModule } from './snippet/snippet.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
-import DbConfiguration from './testconfig/db.configuration';
 import { ScheduleModule } from '@nestjs/schedule';
-import { TaskModule } from './testschedule/TaskModule';
+import { TaskModule } from './schedule/TaskModule';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CommentModule } from './comment/comment.module';
 import { ReplyModule } from './reply/reply.module';
-import { TagsController } from './tags/tags.controller';
 import { TagsModule } from './tags/tags.module';
+import { ConfigurationModule } from './configuration/configuration.module';
+import { UploadService } from './upload/upload.service';
+import { UploadModule } from './upload/upload.module';
 
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/snippet', {
       useNewUrlParser: true,
     }),
-    ConfigModule.forRoot({ load: [DbConfiguration] }),
+    ConfigModule.forRoot({isGlobal: true}),
     ScheduleModule.forRoot(),
     SnippetModule,
     TaskModule,
@@ -39,15 +38,15 @@ import { TagsModule } from './tags/tags.module';
     UsersModule,
     CommentModule,
     ReplyModule,
-    TagsModule
+    TagsModule,
+    ConfigurationModule,
+    UploadModule
   ],
   controllers: [
     AppController,
-    TestCookieController,
-    TestsessionController,
     UploadController
   ],
-  providers: [AppService]
+  providers: [AppService, UploadService]
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

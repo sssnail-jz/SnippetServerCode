@@ -1,19 +1,10 @@
-import {
-  Controller,
-  Post,
-  Body,
-  UseInterceptors,
-  UploadedFile,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Post, Body, UseInterceptors, UploadedFile, UseGuards} from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { join } from 'path';
-import { createWriteStream } from 'fs';
-
 import { ApiHeader, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthGuard } from '@nestjs/passport';
 import { SnippetExceptionSchema } from 'src/exceptionfilter/snippet.exception.schema';
 import { UploadBody } from 'src/entities/upload.body';
+import { UploadService } from './upload.service';
 
 @Controller('upload')
 @ApiTags('upload')
@@ -36,15 +27,18 @@ import { UploadBody } from 'src/entities/upload.body';
 })
 export class UploadController {
 
-  @Post()
-  upload(
+  constructor(private readonly uploadService: UploadService){}
+
+  /**
+   * 封面上传
+   * @param file 
+   * @param body 
+   * @returns 
+   */
+  @Post('cover')
+  cover(
     @UploadedFile() file: Express.Multer.File, 
-    @Body() body: UploadBody
-    ) {
-    const writeImage = createWriteStream(
-      join(__dirname, '..', '../statics/upload', body.dir, body.uname),
-    );
-    writeImage.write(file.buffer);
-    return 'success'
+    @Body() body: UploadBody) {
+    return this.uploadService.cover(file, body) ? 'success' : 'error';
   }
 }

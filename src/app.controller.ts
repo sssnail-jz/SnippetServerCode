@@ -5,7 +5,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { SnippetExceptionsFilter } from './exceptionfilter/snippet.exception.filter';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { SnippetExceptionSchema } from './exceptionfilter/snippet.exception.schema';
-import { SnippetLogger } from './testcustomlogger/snippetLogger';
+import { SnippetLogger } from './customlogger/SnippetLogger';
 
 @Controller()
 @ApiTags('door')

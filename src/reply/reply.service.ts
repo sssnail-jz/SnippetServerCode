@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { SnippetLogger } from 'src/testcustomlogger/snippetLogger';
+import { SnippetLogger } from 'src/customlogger/SnippetLogger';
 import * as mongoose from 'mongoose';
 
 @Injectable()

@@ -5,7 +5,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cookieParser from 'cookie-parser';
 import * as session from 'express-session';
-import { SnippetLogger } from './testcustomlogger/snippetLogger';
+import { SnippetLogger } from './customlogger/SnippetLogger';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {

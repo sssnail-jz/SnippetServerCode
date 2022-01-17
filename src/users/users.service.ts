@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Timeout } from '@nestjs/schedule';
-import { SnippetLogger } from 'src/testcustomlogger/snippetLogger';
+import { SnippetLogger } from 'src/customlogger/SnippetLogger';
 
 export type User = any;
 
